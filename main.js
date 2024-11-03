@@ -237,16 +237,7 @@ document.body.appendChild(loader); // Добавляем его на стран�
 
 
 
-// const loader = document.createElement('div');
-// loader.className = 'loader'; // Применяем CSS класс для стилей
-// loader.style.display = 'none'; // Скрываем индикатор по умолчанию
 
-// // Создаем элемент для текста
-// const loadingText = document.createElement('span');
-// loadingText.textContent = 'Загрузка...'; // Устанавливаем текст
-// // loadingText.style.textAlign = 'center'; // Центрируем текст
-// // loadingText.style.marginTop = '10px'; // Добавляем отступ сверху
-// loadingText.style.display = 'none'; // Скрываем текст по умолчанию
 
 
 // Обработчик события для отправки файлов на сервер
