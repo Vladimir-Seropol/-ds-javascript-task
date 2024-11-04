@@ -11,7 +11,7 @@ const customFileUpload = document.createElement('div');
 const fileInput = document.createElement('input');
 const label = document.createElement('label');
 const uploadButton = document.createElement('button');
-const fileList = document.createElement('div'); // Для отображения списка файлов
+const fileList = document.createElement('div'); 
 const h1 = document.createElement('h1');
 const p = document.createElement('p');
 
@@ -23,8 +23,8 @@ p.innerHTML = 'Вы можете загрузить до 5 файлов JPG, JPE
 
 // Настраиваем input
 fileInput.type = 'file';
-fileInput.accept = 'image/*'; // Принимаем только изображения
-fileInput.multiple = true; // Разрешаем выбор нескольких файлов
+fileInput.accept = 'image/*'; 
+fileInput.multiple = true; 
 fileInput.id = 'file-input';
 
 // Устанавливаем стиль фона с SVG
@@ -54,60 +54,61 @@ function isFileAlreadySelected(file) {
 }
 
 // Функция для обновления списка файлов и их превью
-let draggedIndex; // Индекс перетаскиваемого элемента
+let draggedIndex; 
 
 function updateFileList() {
-    fileList.innerHTML = ''; // Очищаем предыдущий список файлов
+    fileList.innerHTML = ''; 
     selectedFiles.forEach((file, index) => {
         const fileItem = document.createElement('div');
         fileItem.className = 'file__item';
-        fileItem.draggable = true; // Делаем элемент перетаскиваемым
+        fileItem.draggable = true; 
 
         // Создаем элемент img для превью
         const imgPreview = document.createElement('img');
-        imgPreview.src = URL.createObjectURL(file); // Устанавливаем источник на URL объекта
-        fileItem.prepend(imgPreview); // Добавляем превью перед именем файла
+        imgPreview.src = URL.createObjectURL(file); 
+        fileItem.prepend(imgPreview); 
 
         const fileName = document.createElement('span');
-        fileName.textContent = file.name; // Отображаем имя файла
-        fileItem.appendChild(fileName); // Добавляем имя файла в элемент
+        fileName.textContent = file.name; 
+        fileItem.appendChild(fileName); 
 
         // Создаем элемент для отображения размера файла
         const fileSize = document.createElement('span');
-        fileSize.textContent = `${(file.size / (1024 * 1024)).toFixed(2)} МБ`; // Отображаем размер файла в МБ
-        fileItem.appendChild(fileSize); // Добавляем размер файла в элемент
+        fileSize.textContent = `${(file.size / (1024 * 1024)).toFixed(2)} МБ`;
+        fileItem.appendChild(fileSize);
         
         // Создаем кнопку удаления
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Удалить';
-        deleteButton.style.marginLeft = '10px'; // Отступ между именем файла и кнопкой удаления
+        deleteButton.style.marginLeft = '10px'; 
         deleteButton.onclick = () => {
-            selectedFiles.splice(index, 1); // Удаляем файл из массива
-            updateFileList(); // Обновляем отображение списка файлов
+            selectedFiles.splice(index, 1); 
+            updateFileList(); 
         };
 
-        fileItem.appendChild(deleteButton); // Добавляем кнопку удаления в элемент
-        fileList.appendChild(fileItem); // Добавляем элемент в список файлов
+        fileItem.appendChild(deleteButton); 
+        fileList.appendChild(fileItem);
 
         // Обработчики событий для перетаскивания
         fileItem.addEventListener('dragstart', (event) => {
-            draggedIndex = index; // Сохраняем индекс перетаскиваемого элемента
-            event.dataTransfer.effectAllowed = 'move'; // Разрешаем перемещение
-            event.dataTransfer.setData('image', ''); // Устанавливаем данные для события drag (пустая строка)
+            draggedIndex = index; 
+            event.dataTransfer.effectAllowed = 'move'; 
+            event.dataTransfer.setData('image', ''); 
         });
 
         fileItem.addEventListener('dragover', (event) => {
-            event.preventDefault(); // Разрешаем перетаскивание
-            event.dataTransfer.dropEffect = 'move'; // Указываем эффект перемещения
+            event.preventDefault(); 
+            event.dataTransfer.dropEffect = 'move'; я
         });
 
         fileItem.addEventListener('drop', (event) => {
-            event.preventDefault(); // Предотвращаем стандартное поведение
+            event.preventDefault(); е
             if (draggedIndex !== index) { 
+
                 // Меняем местами файлы в массиве
-                const [draggedFile] = selectedFiles.splice(draggedIndex, 1); // Удаляем файл из старой позиции
-                selectedFiles.splice(index, 0, draggedFile); // Вставляем файл на новое место
-                updateFileList(); // Обновляем отображение списка файлов
+                const [draggedFile] = selectedFiles.splice(draggedIndex, 1); 
+                selectedFiles.splice(index, 0, draggedFile); 
+                updateFileList(); 
             }
         });
     });
@@ -123,7 +124,7 @@ fileInput.addEventListener('change', handleFileInputChange);
 // Обработчик для drag-and-drop
 function handleDragOver(event) {
     event.preventDefault();
-    fileList.classList.add('drag-over'); // Добавьте класс для стилизации (опционально)
+    fileList.classList.add('drag-over'); // Добавляем класс
 }
 
 function handleDrop(event) {
@@ -131,31 +132,31 @@ function handleDrop(event) {
     fileList.classList.remove('drag-over'); // Убираем класс
 
     const droppedFiles = Array.from(event.dataTransfer.files); // Получаем файлы из события drop
-    handleFileSelection(droppedFiles); // Вызываем общую функцию
+    handleFileSelection(droppedFiles); 
 }
 
 // Обработчик изменения input
 function handleFileInputChange() {
     const files = Array.from(this.files);
-    handleFileSelection(files); // Вызываем общую функцию
+    handleFileSelection(files); 
 }
 
 
 
 function handleFileSelection(files) {
-    const validFiles = validateFiles(files); // Проверяем валидность файлов
+    const validFiles = validateFiles(files); 
 
     // Создаем элемент загрузчика
     const loader = document.createElement('div');
-    loader.className = 'loader'; // Применяем CSS класс для стилей
-    loader.style.display = 'none'; // Скрываем индикатор по умолчанию
+    loader.className = 'loader'; 
+    loader.style.display = 'none'; 
 
     // Добавляем текст в элемент загрузчика
     const loadingText = document.createElement('span');
     loadingText.textContent = 'Загрузка...';
     loader.appendChild(loadingText);
 
-    document.body.appendChild(loader); // Добавляем его на страницу
+    document.body.appendChild(loader); 
 
     // Ограничиваем количество добавляемых файлов
     if (selectedFiles.length + validFiles.length > 5) {
@@ -173,16 +174,16 @@ function handleFileSelection(files) {
         }
     });
 
-    // Исправление здесь: используйте обратные кавычки
+   
     label.textContent = selectedFiles.length > 0 ? `${selectedFiles.length} файл(ов) выбрано` : 'Выберите файлы';
     
-    updateFileList(); // Обновляем отображение списка файлов
+    updateFileList(); 
 
     // Имитация асинхронной операции (например, загрузка файла)
     setTimeout(() => {
         // Скрываем индикатор загрузки после завершения обработки
         loader.style.display = 'none';
-    }, 2000); // Задержка в 2 секунды для демонстрации
+    }, 2000);
 }
 
 
@@ -195,20 +196,20 @@ function validateFiles(files) {
     for (const file of files) {
         if (!file.type.match('image.*')) {
             alert(`Файл ${file.name} не является изображением. Пожалуйста, выберите файл в формате jpg, jpeg или png.`);
-            continue; // Пропускаем файл, если он не изображение
+            continue; 
         }
 
-        if (file.size > 10 * 1024 * 1024) { // Если файл больше 10 MB
+        if (file.size > 10 * 1024 * 1024) {
             alert(`Файл ${file.name} превышает максимальный размер в 10 MB и не будет добавлен.`);
-            continue; // Пропускаем файл, если он больше 10 MB
+            continue;B
         }
 
         if (isFileAlreadySelected(file)) {
             alert(`Файл ${file.name} уже был добавлен.`);
-            continue; // Пропускаем файл, если он уже был добавлен
+            continue; 
         }
 
-        validFiles.push(file); // Если все проверки пройдены, добавляем файл в валидные
+        validFiles.push(file); 
     }
     return validFiles;
 }
@@ -219,16 +220,16 @@ function validateFiles(files) {
 
 // Создаем элемент загрузчика
 const loader = document.createElement('div');
-loader.className = 'loaderer'; // Применяем CSS класс для стилей
-loader.style.display = 'none'; // Скрываем индикатор по умолчанию
+loader.className = 'loaderer'; 
+loader.style.display = 'none'; 
 
 // Добавляем текст в элемент загрузчика
 const loadingText = document.createElement('span');
 loadingText.textContent = 'Загрузка...';
-loadingText.style.display = 'none'; // Скрываем текст по умолчанию
+loadingText.style.display = 'none'; 
 loader.appendChild(loadingText);
 
-document.body.appendChild(loader); // Добавляем его на страницу
+document.body.appendChild(loader); 
 
 
 
@@ -245,8 +246,8 @@ document.body.appendChild(loader); // Добавляем его на стран�
 uploadButton.addEventListener('click', async function() {
    
 
-    const selectedFilesFromInput = Array.from(fileInput.files || []); // Получаем выбранные файлы из fileInput
-    const selectedFilesFromList = Array.from(fileList.files || []); // Убедитесь, что fileList имеет свойство files
+    const selectedFilesFromInput = Array.from(fileInput.files || []); 
+    const selectedFilesFromList = Array.from(fileList.files || []); 
 
     // Объединяем массивы выбранных файлов
     const allSelectedFiles = [...selectedFilesFromInput, ...selectedFilesFromList, ...selectedFiles];
@@ -269,7 +270,7 @@ uploadButton.addEventListener('click', async function() {
 
     // Показываем индикатор загрузки
     loader.style.display = 'block';
-    loadingText.style.display = 'block'; // Показываем текст "Загрузка"
+    loadingText.style.display = 'block'; 
 
     try {
         // Отправка файлов на сервер
@@ -330,7 +331,7 @@ async function fetchData(formData) {
         throw new Error(`Ошибка ${response.status}: ${errorData.message || 'Ошибка при отправке файлов.'}`);
     }
 
-    return data;; // Возвращаем данные ответа
+    return data;
 }
 
 
@@ -339,14 +340,13 @@ async function fetchData(formData) {
 app.appendChild(form); 
 form.appendChild(h1);
 form.appendChild(p);
-form.appendChild(container); // Добавляем контейнер в DOM
+form.appendChild(container); 
 customFileUpload.appendChild(fileInput);
 container.appendChild(label);
-container.appendChild(uploadButton); // Добавляем кнопку в контейнер
+container.appendChild(uploadButton); 
 container.appendChild(customFileUpload);
-form.appendChild(fileList); // Добавляем список файлов
+form.appendChild(fileList); 
 
-// Добавляем индикатор загрузки и текст в форму
 form.appendChild(loader);
 form.appendChild(loadingText);
 
